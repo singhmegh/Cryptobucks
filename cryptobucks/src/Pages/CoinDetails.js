@@ -9,7 +9,7 @@ const CoinDetails = () => {
   return (
     <div className="container my-4">
       <button
-        className="btn btn-outline-primary mb-3"
+        className="btn btn-outline-dark mb-3"
         onClick={() => navigate(-1)} // Go back to previous page
       >
         <i className="bi bi-arrow-left"></i>
