@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { fetchMarketData } from '../api';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { fetchMarketData } from "../api";
 
 const CryptoTable = () => {
   const [coins, setCoins] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [currency, setCurrency] = useState('usd');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currency, setCurrency] = useState("usd");
   const navigate = useNavigate();
 
   useEffect(() => {
     async function loadData() {
       const data = await fetchMarketData(currency);
-      console.log('Fetched Coins:', data);
+      console.log("Fetched Coins:", data);
       setCoins(data);
     }
     loadData();
@@ -21,15 +21,16 @@ const CryptoTable = () => {
     navigate(`/coins/${id}`);
   };
 
-  const filteredCoins = coins.filter((coin) =>
-    coin.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    coin.symbol?.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredCoins = coins.filter(
+    (coin) =>
+      coin.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      coin.symbol?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const currencySymbols = {
-    usd: '$',
-    inr: '₹',
-    eur: '€'
+    usd: "$",
+    inr: "₹",
+    eur: "€",
   };
 
   return (
@@ -78,20 +79,40 @@ const CryptoTable = () => {
               <tr
                 key={coin.id}
                 onClick={() => handleRowClick(coin.id)}
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: "pointer" }}
               >
                 <td>
                   <img src={coin.image} alt={coin.name} width={30} />
                 </td>
                 <td>{coin.name}</td>
-                <td>{currencySymbols[currency]}{coin.current_price.toLocaleString()}</td>
-                <td>{currencySymbols[currency]}{coin.market_cap.toLocaleString()}</td>
-                <td className={coin.price_change_percentage_24h > 0 ? 'text-success' : 'text-danger'}>
+                <td>
+                  {currencySymbols[currency]}
+                  {coin.current_price.toLocaleString()}
+                </td>
+                <td>
+                  {currencySymbols[currency]}
+                  {coin.market_cap.toLocaleString()}
+                </td>
+                <td
+                  className={
+                    coin.price_change_percentage_24h > 0
+                      ? "text-success"
+                      : "text-danger"
+                  }
+                >
                   {coin.price_change_percentage_24h.toFixed(2)}%
                 </td>
                 <td>
-                  <span className={`badge ${coin.price_change_percentage_24h > 0 ? 'bg-success' : 'bg-danger'}`}>
-                    {coin.price_change_percentage_24h > 0 ? 'Top Gainer' : 'Top Loser'}
+                  <span
+                    className={`badge ${
+                      coin.price_change_percentage_24h > 0
+                        ? "bg-success"
+                        : "bg-danger"
+                    }`}
+                  >
+                    {coin.price_change_percentage_24h > 0
+                      ? "Top Gainer"
+                      : "Top Loser"}
                   </span>
                 </td>
               </tr>
